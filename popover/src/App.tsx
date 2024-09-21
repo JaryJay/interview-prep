@@ -1,3 +1,4 @@
+import ClickPopover from "./components/click-popover"
 import HoverPopover from "./components/hover-popover"
 
 function App() {
@@ -11,6 +12,12 @@ function App() {
             <button className="bg-green-100 hover:bg-green-200 p-2 rounded-sm">Click me</button>
           </div>
         </HoverPopover>
+        <ClickPopover>
+          <div className="m-4">
+            Content blah blah blah
+            <button className="bg-green-100 hover:bg-green-200 p-2 rounded-sm">Click me</button>
+          </div>
+        </ClickPopover>
       </div>
     </div>
   )
