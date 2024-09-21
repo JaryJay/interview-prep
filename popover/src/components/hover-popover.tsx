@@ -9,7 +9,7 @@ export interface PopoverProps {
 	side?: Side
 }
 
-function Popover({ children, trigger, delay = 50, closeDelay = 100, side = "top" }: PropsWithChildren<PopoverProps>) {
+function HoverPopover({ children, trigger, delay = 50, closeDelay = 100, side = "top" }: PropsWithChildren<PopoverProps>) {
 	if (delay && delay < 0) {
 		throw new Error(`Delay must be non-negative: ${delay}`)
 	}
@@ -41,25 +41,6 @@ function Popover({ children, trigger, delay = 50, closeDelay = 100, side = "top"
 		setHoverDelayTimerHandle(newTimerHandle)
 	}, [hoverDelayTimerHandle, setHoverDelayTimerHandle])
 
-	const contentOnMouseEnter = useCallback(() => {
-		if (hoverDelayTimerHandle !== undefined) {
-			clearTimeout(hoverDelayTimerHandle);
-		}
-		const newTimerHandle = setTimeout(() => {
-			setOpen(true);
-		}, delay);
-		setHoverDelayTimerHandle(newTimerHandle)
-	}, [hoverDelayTimerHandle, setHoverDelayTimerHandle])
-	const contentOnMouseLeave = useCallback(() => {
-		if (hoverDelayTimerHandle !== undefined) {
-			clearTimeout(hoverDelayTimerHandle);
-		}
-		const newTimerHandle = setTimeout(() => {
-			setOpen(false);
-		}, closeDelay);
-		setHoverDelayTimerHandle(newTimerHandle)
-	}, [hoverDelayTimerHandle, setHoverDelayTimerHandle])
-
 	return (
 		<div>
 			<div className="relative bg-green-100">
@@ -75,8 +56,8 @@ function Popover({ children, trigger, delay = 50, closeDelay = 100, side = "top"
 				{/* Content */}
 				<div
 					className={"absolute bottom-full left-1/2 transform -translate-x-1/2 rounded-md shadow-md bg-white transition-all " + (open ? "-translate-y-4 opacity-100" : "-translate-y-3 opacity-0")}
-					onMouseEnter={open ? contentOnMouseEnter : undefined}
-					onMouseLeave={open ? contentOnMouseLeave : undefined}
+					onMouseEnter={open ? onMouseEnter : undefined}
+					onMouseLeave={open ? onMouseLeave : undefined}
 				>
 					{/* Arrow */}
 					<div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full border-x-transparent  border-t-white border-b-0 border-8" />
@@ -89,4 +70,4 @@ function Popover({ children, trigger, delay = 50, closeDelay = 100, side = "top"
 	)
 }
 
-export default Popover
+export default HoverPopover
