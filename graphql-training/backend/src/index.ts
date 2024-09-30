@@ -30,6 +30,10 @@ const typeDefs = `#graphql
   type Query {
     books: [Book]
   }
+
+	type Mutation {
+		addBook(title: String!, author: String!): Book!
+	}
 `;
 
 // Resolvers define how to fetch the types defined in your schema.
@@ -37,6 +41,16 @@ const typeDefs = `#graphql
 const resolvers = {
 	Query: {
 		books: () => books,
+	},
+	Mutation: {
+		addBook: (_, args) => {
+			const newBook = {
+				title: args.title,
+				author: args.author,
+			};
+			books.push(newBook);
+			return newBook;
+		},
 	},
 };
 
