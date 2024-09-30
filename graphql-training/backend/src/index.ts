@@ -1,14 +1,14 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from '@apollo/server/standalone';
 
-const books = [
+const blogs = [
 	{
-		title: 'The Awakening',
-		author: 'Kate Chopin',
+		title: 'Blog 1',
+		description: 'Hello world',
 	},
 	{
-		title: 'City of Glass',
-		author: 'Paul Auster',
+		title: 'Blog 2',
+		description: 'Yayyy',
 	},
 ];
 
@@ -18,38 +18,38 @@ const books = [
 const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
+  # This "Blog" type defines the queryable fields for every book in our data source.
+  type Blog {
     title: String
-    author: String
+    description: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  # case, the "blogs" query returns an array of zero or more Blogs (defined above).
   type Query {
-    books: [Book]
+    blogs: [Blog]
   }
 
 	type Mutation {
-		addBook(title: String!, author: String!): Book!
+		addBlog(title: String!, description: String!): Blog!
 	}
 `;
 
 // Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
+// This resolver retrieves blogs from the "blogs" array above.
 const resolvers = {
 	Query: {
-		books: () => books,
+		blogs: () => blogs,
 	},
 	Mutation: {
-		addBook: (_, args) => {
-			const newBook = {
+		addBlog: (parent, args) => {
+			const newBlog = {
 				title: args.title,
-				author: args.author,
+				description: args.description,
 			};
-			books.push(newBook);
-			return newBook;
+			blogs.push(newBlog);
+			return newBlog;
 		},
 	},
 };
